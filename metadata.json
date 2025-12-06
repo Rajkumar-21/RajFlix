@@ -1,0 +1,5 @@
+{
+  "name": "Cineflux - AI-Powered Movie Browser",
+  "description": "A sleek, Netflix-inspired web application for browsing movies and TV series. Utilizes the TMDb API for comprehensive movie details and trailers, and features an AI-powered movie suggester using the Gemini API to help you discover your next favorite film.",
+  "requestFramePermissions": []
+}

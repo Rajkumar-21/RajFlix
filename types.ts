@@ -1,4 +1,3 @@
-
 export interface Movie {
   id: number;
   title: string;
@@ -12,6 +11,7 @@ export interface Movie {
   first_air_date?: string;
   genre_ids: number[];
   genres?: Genre[];
+  media_type?: 'movie' | 'tv';
 }
 
 export interface Genre {

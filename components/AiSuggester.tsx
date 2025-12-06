@@ -48,7 +48,7 @@ const AiSuggester: React.FC<AiSuggesterProps> = ({ onSelectMovie }) => {
   }, [prompt]);
 
   return (
-    <div className="mt-16 md:mt-24 p-4 md:p-0">
+    <div className="p-4 md:p-0">
       <div className="max-w-4xl mx-auto bg-gray-900/50 rounded-lg p-6 backdrop-blur-sm">
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">AI Movie Suggester</h2>
         <p className="text-gray-300 mb-6">Can't decide what to watch? Describe a movie or a mood, and let our AI find suggestions for you!</p>

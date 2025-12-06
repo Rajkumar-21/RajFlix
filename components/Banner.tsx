@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import type { Movie } from '../types';
-import { fetchMovies, getTmdbRequests, IMAGE_BASE_URL } from '../services/tmdbService';
+import { fetchMovies, tmdbRequests, IMAGE_BASE_URL } from '../services/tmdbService';
 
 interface BannerProps {
   onSelectMovie: (movie: Movie) => void;
+  fetchUrl?: string;
 }
 
-const Banner: React.FC<BannerProps> = ({ onSelectMovie }) => {
+const Banner: React.FC<BannerProps> = ({ onSelectMovie, fetchUrl }) => {
   const [movie, setMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
     const fetchRandomMovie = async () => {
-      const tmdbRequests = getTmdbRequests();
-      if (!tmdbRequests.fetchTrending) return;
-      const movies = await fetchMovies(tmdbRequests.fetchTrending);
+      const url = fetchUrl || tmdbRequests.fetchTrending;
+      if (!url) return;
+      const movies = await fetchMovies(url);
       if (movies.length > 0) {
         setMovie(movies[Math.floor(Math.random() * movies.length)]);
       }
     };
     fetchRandomMovie();
-  }, []);
+  }, [fetchUrl]);
 
   const truncate = (str: string, n: number) => {
     return str?.length > n ? str.substr(0, n - 1) + '...' : str;
@@ -54,7 +55,7 @@ const Banner: React.FC<BannerProps> = ({ onSelectMovie }) => {
 
       <div className="flex space-x-3">
         <button className="flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold text-black bg-white transition hover:bg-white/75 md:py-2.5 md:px-8 md:text-xl" onClick={() => onSelectMovie(movie)}>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
           Play
         </button>
         <button className="flex items-center gap-x-2 rounded bg-gray-600/70 px-5 py-1.5 text-sm font-semibold transition hover:bg-gray-500/60 md:py-2.5 md:px-8 md:text-xl" onClick={() => onSelectMovie(movie)}>

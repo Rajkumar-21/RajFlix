@@ -12,9 +12,9 @@ const AboutModal: React.FC<AboutModalProps> = ({ onClose }) => {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
         <div className="p-8 space-y-6">
-          <h2 className="font-display text-4xl md:text-5xl text-brand-red">About Meiyazhagan</h2>
+          <h2 className="font-display text-4xl md:text-5xl text-brand-red">About Rajkumar</h2>
           <p className="text-gray-300">
-            Welcome to Meiyazhagan, a modern web application for browsing movies and TV series, inspired by Netflix. This project showcases a seamless user experience built with cutting-edge front-end technologies.
+            Welcome to RajFlix, a modern web application for browsing movies and TV series, inspired by Netflix. This project showcases a seamless user experience built with cutting-edge front-end technologies.
           </p>
           <div className="space-y-3">
             <h3 className="text-xl font-semibold text-white">Core Features:</h3>
@@ -26,7 +26,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ onClose }) => {
             </ul>
           </div>
            <div className="border-t border-gray-700 pt-4">
-               <p className="text-center text-gray-500 text-sm">Developed with ❤️ by Raj.</p>
+               <p className="text-center text-gray-500 text-sm">Developed with ❤️ by Rajkumar.</p>
            </div>
         </div>
       </div>

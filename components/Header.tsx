@@ -111,7 +111,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onSearch, onOp
                 <div className="absolute top-12 right-0 w-48 bg-black/90 border border-gray-700 rounded-md shadow-lg py-2">
                     <div className="flex items-center space-x-3 px-4 py-2 border-b border-gray-700">
                         <img src="https://i.pravatar.cc/150?u=raj" alt="Profile" className="h-10 w-10 rounded" />
-                        <span className="font-semibold text-white">Raj</span>
+                        <span className="font-semibold text-white">Rajkumar</span>
                     </div>
                     <button 
                         onClick={() => {

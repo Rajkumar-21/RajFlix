@@ -5,6 +5,7 @@ import Row from './components/Row';
 import MovieModal from './components/MovieModal';
 import AiSuggester from './components/AiSuggester';
 import SearchResults from './components/SearchResults';
+import AboutModal from './components/AboutModal'; // Import AboutModal
 import { tmdbRequests } from './services/tmdbService';
 import type { Movie } from './types';
 
@@ -14,6 +15,7 @@ const App: React.FC = () => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [currentView, setCurrentView] = useState<View>('home');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false); // State for About Modal
 
   const handleSelectMovie = (movie: Movie) => {
     setSelectedMovie(movie);
@@ -81,7 +83,12 @@ const App: React.FC = () => {
 
   return (
     <div className="relative bg-brand-black min-h-screen text-white">
-      <Header currentView={currentView} onNavigate={handleNavigate} onSearch={handleSearch} />
+      <Header 
+        currentView={currentView} 
+        onNavigate={handleNavigate} 
+        onSearch={handleSearch} 
+        onOpenAbout={() => setIsAboutModalOpen(true)} // Pass handler to Header
+      />
       <main className="relative pl-4 pb-8 lg:space-y-24 lg:pl-16">
         {searchQuery ? (
           <SearchResults query={searchQuery} onSelectMovie={handleSelectMovie} />
@@ -90,6 +97,7 @@ const App: React.FC = () => {
         )}
       </main>
       {selectedMovie && <MovieModal movie={selectedMovie} onClose={handleCloseModal} />}
+      {isAboutModalOpen && <AboutModal onClose={() => setIsAboutModalOpen(false)} />} {/* Render About Modal */}
     </div>
   );
 };

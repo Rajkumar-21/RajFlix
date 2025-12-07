@@ -5,13 +5,16 @@ interface HeaderProps {
     currentView: View;
     onNavigate: (view: View) => void;
     onSearch: (query: string) => void;
+    onOpenAbout: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onSearch }) => {
+const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onSearch, onOpenAbout }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const profileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +29,17 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onSearch }) =>
       searchInputRef.current?.focus();
     }
   }, [isSearchOpen]);
+
+  // Close profile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
   
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,8 +66,8 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onSearch }) =>
   return (
     <header className={`fixed top-0 z-50 flex w-full items-center justify-between p-4 transition-all lg:px-16 lg:py-6 ${isScrolled || isSearchOpen ? 'bg-brand-black/90 backdrop-blur-sm' : 'bg-transparent'}`}>
       <div className="flex items-center space-x-2 md:space-x-10">
-        <h1 className="text-2xl md:text-4xl font-bold text-brand-red cursor-pointer tracking-wider" onClick={() => onNavigate('home')}>
-            CINEFLUX
+        <h1 className="font-display text-4xl md:text-5xl text-brand-red cursor-pointer" onClick={() => onNavigate('home')}>
+            RajFlix
         </h1>
         <nav className="hidden space-x-4 md:flex">
             <NavLink view="home" title="Home" />
@@ -85,11 +99,32 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onSearch }) =>
               )}
             </button>
          </div>
-         <img
-          src="https://picsum.photos/50"
-          alt="Profile"
-          className="cursor-pointer rounded"
-        />
+         <div className="relative" ref={profileMenuRef}>
+            <button onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}>
+                <img
+                    src="https://i.pravatar.cc/150?u=raj" // Static photo
+                    alt="Profile"
+                    className="h-8 w-8 cursor-pointer rounded"
+                />
+            </button>
+            {isProfileMenuOpen && (
+                <div className="absolute top-12 right-0 w-48 bg-black/90 border border-gray-700 rounded-md shadow-lg py-2">
+                    <div className="flex items-center space-x-3 px-4 py-2 border-b border-gray-700">
+                        <img src="https://i.pravatar.cc/150?u=raj" alt="Profile" className="h-10 w-10 rounded" />
+                        <span className="font-semibold text-white">Raj</span>
+                    </div>
+                    <button 
+                        onClick={() => {
+                            onOpenAbout();
+                            setIsProfileMenuOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700/50"
+                    >
+                        About
+                    </button>
+                </div>
+            )}
+         </div>
       </div>
     </header>
   );

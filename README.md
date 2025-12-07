@@ -1,22 +1,123 @@
 <div align="center">
-  <img src="assets/Rajflix.png" alt="RajFlix Banner" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" />
+  <img src="assets/Rajflix.png" alt="RajFlix Banner" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);" />
 </div>
 
 <br/>
 
-# 🎬 RajFlix - AI-Powered Movie Browser
+# 🎬 RajFlix - AI-Powered Movie & Tv Shows search inventory Application
 
 A modern, Netflix-inspired movie and TV show browsing application powered by AI. Built with React, TypeScript, and Vite, RajFlix provides an intuitive interface to discover trending content, search for your favorites, and get personalized recommendations using Google's Gemini AI.
 
 ## ✨ Features
 
-- 🎯 **Browse Movies & TV Shows**: Explore trending content, top-rated movies, and popular TV series
-- 🔍 **Smart Search**: Quickly find your favorite movies and shows
-- 🤖 **AI-Powered Suggestions**: Get personalized movie recommendations using Google Gemini AI
-- 🎨 **Beautiful UI**: Netflix-inspired responsive design with smooth animations
-- 📱 **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-- 🎭 **Detailed Information**: View comprehensive details about movies and shows including cast, ratings, and synopsis
-- 🎬 **Categories**: Browse by genre - Action, Comedy, Horror, Romance, Documentaries, and more
+### 🎬 Content Browsing
+- **Trending Content**: Discover what's popular right now across movies and TV shows
+- **Multiple Categories**: Browse by genre with 27+ genres including Action, Comedy, Horror, Sci-Fi, Romance, and more
+- **Separate Views**: Dedicated sections for Movies and TV Shows
+- **Netflix Originals**: Special section featuring Netflix exclusive content
+- **Genre Filtering**: Filter content by media type (Movies/TV), year (1990s-2024), and ratings (6-9+)
+
+### 🔍 Advanced Search
+- **Smart Search Algorithm**: Intelligent search with multi-page results and relevance ranking
+- **Search Filters**: Filter results by media type, year range, and minimum rating
+- **Real-time Results**: Dynamic search with debouncing for optimal performance
+- **Search Hints**: Helpful suggestions when no results are found
+
+### 🤖 AI-Powered Recommendations
+- **Gemini AI Integration**: Get personalized movie and TV show suggestions using Google's Gemini AI
+- **Natural Language Input**: Describe what you want to watch in your own words
+- **Smart Suggestions**: AI analyzes your preferences and recommends up to 10 titles
+- **Interactive Cards**: Click any AI suggestion to view full details
+
+### 🎭 Detailed Information
+- **Comprehensive Movie/Show Details**: 
+  - Synopsis and overview
+  - Cast members with photos and character names
+  - Release dates and runtime/seasons
+  - Languages (original and available)
+  - Production companies
+  - User ratings and status
+- **Streaming Availability**: See where content is available to watch in US, India, UK, and Canada with OTT platform logos
+- **Cast Profiles**: Click on any cast member to view:
+  - Full biography and personal information
+  - Filmography with top 10 known works
+  - Age, birthplace, and alternate names
+  - Profile photos
+
+### 🎨 Modern User Interface
+- **Netflix-Inspired Design**: Sleek, dark theme with smooth animations
+- **Hover Effects**: Interactive cards with scale and highlight effects
+- **Hidden Scrollbars**: Clean, modern scrolling without visible scrollbars
+- **Arrow Navigation**: Netflix-style left/right arrow buttons for content rows
+- **Responsive Banner**: Dynamic hero section featuring random trending content
+- **Smooth Transitions**: Fade-in animations and seamless page transitions
+
+### 📱 Fully Responsive
+- **Mobile Optimized**: Touch-friendly interface with proper sizing for mobile devices
+- **Tablet Support**: Adaptive layouts for medium-sized screens
+- **Desktop Experience**: Full-featured experience with hover interactions
+- **Flexible Grid Layouts**: Content adapts to screen size automatically
+- **Touch Gestures**: Swipe-friendly scrolling on mobile devices
+
+### ⚡ Performance Optimized
+- **Lazy Loading**: Images load on-demand for faster page loads
+- **Request Timeouts**: 8-10 second timeouts prevent hanging on slow connections
+- **Error Handling**: Graceful fallbacks when API requests fail
+- **Loading States**: Spinner animations during data fetching
+- **Image Optimization**: Multiple image sizes for different contexts
+- **Debounced Search**: Optimized search to reduce unnecessary API calls
+
+### 🎯 Additional Features
+- **Profile Menu**: Personalized user profile with custom avatar
+- **About Modal**: Information about the application
+- **Direct Navigation**: Quick access to Movies, TV Shows, and Home sections
+- **Keyboard Accessible**: Full keyboard navigation support with aria-labels
+- **Deep Linking**: Navigate from cast to movies and back seamlessly
+
+## 📸 Screenshots
+
+### Home Page
+<img src="assets/screenshots/homepage.png" alt="Home Page" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);" />
+
+*Browse trending movies and TV shows with the Netflix-inspired interface*
+
+### Movie Details
+<img src="assets/screenshots/movie-details.png" alt="Movie Details" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);" />
+
+*Comprehensive movie information including cast, streaming platforms, and ratings*
+
+### Cast Profile
+<img src="assets/screenshots/cast-profile.png" alt="Cast Profile" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);" />
+<img src="assets/screenshots/castings-list.png" alt="Cast List" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); margin-top: 10px;" />
+
+*Detailed cast member information with biography and filmography*
+
+### AI Suggestions
+<img src="assets/screenshots/ai-suggestions.png" alt="AI Suggestions" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);" />
+
+*Get personalized recommendations using Google Gemini AI*
+
+### Search Results
+<img src="assets/screenshots/search.png" alt="Search Results" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);" />
+
+*Smart search with filtering options by type, year, and rating*
+
+### Genre Filtering
+<img src="assets/screenshots/genre.png" alt="Genre View" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);" />
+
+*Browse content by genre with advanced filters*
+
+### Mobile View
+<img src="assets/screenshots/mobile.png" alt="Mobile Responsive" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);" />
+
+*Fully responsive design optimized for mobile devices*
+
+### Streaming Platforms
+<img src="assets/screenshots/OTT-available.png" alt="OTT Platforms" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);" />
+
+*See where to watch with streaming platform availability*
+
+
 
 ## 🛠️ Technologies Used
 

@@ -35,7 +35,7 @@ const Banner: React.FC<BannerProps> = ({ onSelectMovie, fetchUrl }) => {
   }
 
   return (
-    <div className="relative flex flex-col justify-end space-y-2 py-12 md:py-16 px-4 md:space-y-4 min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh]">
+    <div className="relative flex flex-col justify-end space-y-2 py-12 md:py-16 px-4 md:space-y-4 min-h-[50vh] md:min-h-[60vh] lg:min-h-[70vh] -ml-8 lg:-ml-24 mr-0">
       {/* Background Image - Fixed positioning */}
       <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden">
         <img
@@ -58,7 +58,7 @@ const Banner: React.FC<BannerProps> = ({ onSelectMovie, fetchUrl }) => {
       </div>
 
       {/* Content - positioned above background */}
-      <div className="relative z-10 space-y-2 md:space-y-4">
+      <div className="relative z-10 space-y-2 md:space-y-4 pl-4 lg:pl-20">
         <h1 className="text-3xl font-bold md:text-4xl lg:text-6xl xl:text-7xl drop-shadow-2xl max-w-xl lg:max-w-3xl">
           {movie.title || movie.name || movie.original_name}
         </h1>

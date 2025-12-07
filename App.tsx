@@ -103,7 +103,7 @@ const App: React.FC = () => {
         selectedGenreId={selectedGenreId}
         onOpenAbout={() => setIsAboutModalOpen(true)} // Pass handler to Header
       />
-      <main className="relative pl-4 pb-8 lg:pl-16">
+      <main className="relative pl-8 pb-8 lg:pl-24">
         {searchQuery ? (
           <SearchResults query={searchQuery} onSelectMovie={handleSelectMovie} />
         ) : (

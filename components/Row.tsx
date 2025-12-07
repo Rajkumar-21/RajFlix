@@ -12,16 +12,31 @@ interface RowProps {
 
 const Row: React.FC<RowProps> = ({ title, fetchUrl, isLargeRow = false, onSelectMovie }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const rowRef = useRef<HTMLDivElement>(null);
   const [isMoved, setIsMoved] = useState(false);
   const [isAtEnd, setIsAtEnd] = useState(false);
 
   useEffect(() => {
     const getMovies = async () => {
-      const fetchedMovies = await fetchMovies(fetchUrl);
-      setMovies(fetchedMovies);
-      // Timeout to allow the DOM to update before checking scroll
-      setTimeout(checkScroll, 100);
+      setLoading(true);
+      setError(false);
+      try {
+        const fetchedMovies = await fetchMovies(fetchUrl);
+        if (fetchedMovies && fetchedMovies.length > 0) {
+          setMovies(fetchedMovies);
+        } else {
+          setError(true);
+        }
+      } catch (err) {
+        console.error('Error loading movies:', err);
+        setError(true);
+      } finally {
+        setLoading(false);
+        // Timeout to allow the DOM to update before checking scroll
+        setTimeout(checkScroll, 100);
+      }
     };
     getMovies();
   }, [fetchUrl]);
@@ -61,9 +76,19 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl, isLargeRow = false, onSelect
     };
   }, [movies]);
 
+  if (loading) {
+    return (
+      <div className="space-y-1 md:space-y-2">
+        <h2 className="text-lg font-semibold md:text-2xl">{title}</h2>
+        <div className="flex items-center justify-center h-32 md:h-40">
+          <div className="w-8 h-8 border-4 border-t-brand-red border-gray-600 rounded-full animate-spin"></div>
+        </div>
+      </div>
+    );
+  }
 
-  if (movies.length === 0) {
-    return null; // Don't render the row if there are no movies
+  if (error || movies.length === 0) {
+    return null; // Hide row if no content
   }
 
   return (
@@ -73,7 +98,7 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl, isLargeRow = false, onSelect
       </h2>
       <div className="group relative md:-ml-2">
          {isMoved && (
-            <button onClick={() => scroll('left')} className="absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-80 transition hover:scale-125 hover:opacity-100 hidden md:flex items-center justify-center bg-black/40 rounded-full">
+            <button onClick={() => scroll('left')} aria-label="Scroll left" className="absolute top-0 bottom-0 left-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-80 transition hover:scale-125 hover:opacity-100 hidden md:flex items-center justify-center bg-black/40 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                 </svg>
@@ -89,7 +114,7 @@ const Row: React.FC<RowProps> = ({ title, fetchUrl, isLargeRow = false, onSelect
           ))}
         </div>
         {!isAtEnd && (
-            <button onClick={() => scroll('right')} className="absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-80 transition hover:scale-125 hover:opacity-100 hidden md:flex items-center justify-center bg-black/40 rounded-full">
+            <button onClick={() => scroll('right')} aria-label="Scroll right" className="absolute top-0 bottom-0 right-2 z-40 m-auto h-9 w-9 cursor-pointer opacity-80 transition hover:scale-125 hover:opacity-100 hidden md:flex items-center justify-center bg-black/40 rounded-full">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                    <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>

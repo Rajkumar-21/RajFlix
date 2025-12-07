@@ -29,6 +29,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onSelectMovie, isLarge }) 
         src={imageUrl}
         alt={movie.title || movie.name}
         className="rounded-sm object-cover h-full w-full"
+        loading="lazy"
+        decoding="async"
       />
       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-2">
         <p className="text-white text-center text-xs md:text-sm font-bold">

@@ -7,6 +7,7 @@ export interface Movie {
   poster_path: string;
   backdrop_path: string;
   vote_average: number;
+  popularity?: number;
   release_date?: string;
   first_air_date?: string;
   genre_ids: number[];
@@ -17,6 +18,14 @@ export interface Movie {
 export interface Genre {
   id: number;
   name: string;
+}
+
+export interface Cast {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+  order: number;
 }
 
 export interface Video {

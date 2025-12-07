@@ -75,18 +75,19 @@ const GenreView: React.FC<GenreViewProps> = ({ genreId, onSelectMovie }) => {
       <Banner onSelectMovie={onSelectMovie} fetchUrl={movieUrl} />
 
       {/* Filters Section */}
-      <div className="px-4 lg:px-16 py-6">
-        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-          <h2 className="text-2xl md:text-3xl font-semibold text-white">
+      <div className="px-4 lg:px-16 py-4 md:py-6">
+        <div className="flex flex-col gap-3 md:gap-4">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-white">
             {selectedGenre?.name || 'Genre'} Collection
           </h2>
           
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-2 md:gap-3">
             {/* Media Type Filter */}
             <select
               value={mediaType}
               onChange={(e) => setMediaType(e.target.value as MediaTypeFilter)}
-              className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer"
+              className="bg-gray-800 text-white px-3 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer text-sm flex-1 sm:flex-none"
+              aria-label="Filter by media type"
             >
               <option value="all">All</option>
               <option value="movie">Movies</option>
@@ -97,7 +98,8 @@ const GenreView: React.FC<GenreViewProps> = ({ genreId, onSelectMovie }) => {
             <select
               value={yearFilter}
               onChange={(e) => setYearFilter(e.target.value as YearFilter)}
-              className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer"
+              className="bg-gray-800 text-white px-3 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer text-sm flex-1 sm:flex-none"
+              aria-label="Filter by year"
             >
               <option value="all">All Years</option>
               <option value="2024">2024</option>
@@ -114,7 +116,8 @@ const GenreView: React.FC<GenreViewProps> = ({ genreId, onSelectMovie }) => {
             <select
               value={ratingFilter}
               onChange={(e) => setRatingFilter(e.target.value as RatingFilter)}
-              className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer"
+              className="bg-gray-800 text-white px-3 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer text-sm flex-1 sm:flex-none"
+              aria-label="Filter by rating"
             >
               <option value="all">All Ratings</option>
               <option value="9+">9+ Stars</option>

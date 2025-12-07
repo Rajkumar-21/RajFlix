@@ -147,25 +147,28 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, onSelectMovie }) =
         {getSearchHint()}
 
         {results.length > 0 && (
-          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between bg-gray-900/50 p-4 rounded-lg">
-            <div className="flex items-center gap-2 text-sm text-gray-400">
-              <span>Showing {filteredResults.length} of {results.length} results</span>
-              {hasActiveFilters && (
-                <button
-                  onClick={handleResetFilters}
-                  className="ml-2 text-brand-red hover:text-red-400 underline"
-                >
-                  Clear Filters
-                </button>
-              )}
+          <div className="flex flex-col gap-3 md:gap-4 bg-gray-900/50 p-3 md:p-4 rounded-lg">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400">
+                <span>Showing {filteredResults.length} of {results.length} results</span>
+                {hasActiveFilters && (
+                  <button
+                    onClick={handleResetFilters}
+                    className="ml-2 text-brand-red hover:text-red-400 underline text-xs"
+                  >
+                    Clear Filters
+                  </button>
+                )}
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-2 md:gap-3">
               {/* Media Type Filter */}
               <select
                 value={mediaType}
                 onChange={(e) => setMediaType(e.target.value as MediaTypeFilter)}
-                className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer text-sm"
+                className="bg-gray-800 text-white px-3 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer text-sm flex-1 sm:flex-none"
+                aria-label="Filter by media type"
               >
                 <option value="all">All</option>
                 <option value="movie">Movies</option>
@@ -176,7 +179,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, onSelectMovie }) =
               <select
                 value={yearFilter}
                 onChange={(e) => setYearFilter(e.target.value as YearFilter)}
-                className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer text-sm"
+                className="bg-gray-800 text-white px-3 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer text-sm flex-1 sm:flex-none"
+                aria-label="Filter by year"
               >
                 <option value="all">All Years</option>
                 <option value="2024">2024</option>
@@ -193,7 +197,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ query, onSelectMovie }) =
               <select
                 value={ratingFilter}
                 onChange={(e) => setRatingFilter(e.target.value as RatingFilter)}
-                className="bg-gray-800 text-white px-4 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer text-sm"
+                className="bg-gray-800 text-white px-3 py-2 rounded border border-gray-700 focus:outline-none focus:border-brand-red cursor-pointer text-sm flex-1 sm:flex-none"
+                aria-label="Filter by rating"
               >
                 <option value="all">All Ratings</option>
                 <option value="9+">9+ Stars</option>

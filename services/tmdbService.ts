@@ -70,7 +70,12 @@ export const tmdbRequests = {
 export const fetchMovies = async (url: string): Promise<Movie[]> => {
   if (!url) return [];
   try {
-    const response = await fetch(url);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    
     if (!response.ok) {
       const errorData = await response.json();
       console.error(`Error fetching movies: ${response.statusText}`, errorData.status_message);
@@ -79,7 +84,11 @@ export const fetchMovies = async (url: string): Promise<Movie[]> => {
     const data = await response.json();
     return data.results;
   } catch (error) {
-    console.error('Error fetching movies:', error);
+    if (error instanceof Error && error.name === 'AbortError') {
+      console.error('Request timeout - please check your connection');
+    } else {
+      console.error('Error fetching movies:', error);
+    }
     return [];
   }
 };
@@ -87,10 +96,74 @@ export const fetchMovies = async (url: string): Promise<Movie[]> => {
 export const fetchMovieDetails = async (id: number, media_type: 'movie' | 'tv' = 'movie'): Promise<Movie | null> => {
   const url = `${API_BASE_URL}/${media_type}/${id}?api_key=${TMDB_API_KEY}`;
   try {
-    const response = await fetch(url);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+    
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      console.error('Error fetching movie details:', response.statusText);
+      return null;
+    }
     return response.json();
   } catch (error) {
-    console.error('Error fetching movie details:', error);
+    if (error instanceof Error && error.name === 'AbortError') {
+      console.error('Request timeout for movie details');
+    } else {
+      console.error('Error fetching movie details:', error);
+    }
+    return null;
+  }
+};
+
+export const fetchCast = async (id: number, media_type: 'movie' | 'tv' = 'movie'): Promise<any[]> => {
+  const url = `${API_BASE_URL}/${media_type}/${id}/credits?api_key=${TMDB_API_KEY}`;
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      console.error('Error fetching cast:', response.statusText);
+      return [];
+    }
+    const data = await response.json();
+    return data.cast || [];
+  } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      console.error('Request timeout for cast');
+    } else {
+      console.error('Error fetching cast:', error);
+    }
+    return [];
+  }
+};
+
+export const fetchWatchProviders = async (id: number, media_type: 'movie' | 'tv' = 'movie'): Promise<any> => {
+  const url = `${API_BASE_URL}/${media_type}/${id}/watch/providers?api_key=${TMDB_API_KEY}`;
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      console.error('Error fetching watch providers:', response.statusText);
+      return null;
+    }
+    const data = await response.json();
+    // Return providers for US, IN (India), GB (UK), CA (Canada)
+    return data.results;
+  } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      console.error('Request timeout for watch providers');
+    } else {
+      console.error('Error fetching watch providers:', error);
+    }
     return null;
   }
 };

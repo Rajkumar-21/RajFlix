@@ -78,9 +78,9 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onSearch, onGe
   };
 
   return (
-    <header className={`fixed top-0 z-50 flex w-full items-center justify-between p-4 transition-all lg:px-16 lg:py-6 ${isScrolled || isSearchOpen ? 'bg-brand-black/90 backdrop-blur-sm' : 'bg-transparent'}`}>
+    <header className={`fixed top-0 z-50 flex w-full items-center justify-between px-4 py-3 transition-all md:px-8 lg:px-16 lg:py-6 ${isScrolled || isSearchOpen ? 'bg-brand-black/95 backdrop-blur-sm' : 'bg-transparent'}`}>
       <div className="flex items-center space-x-2 md:space-x-10">
-        <h1 className="font-display text-4xl md:text-5xl text-brand-red cursor-pointer" onClick={() => onNavigate('home')}>
+        <h1 className="font-display text-2xl md:text-4xl lg:text-5xl text-brand-red cursor-pointer whitespace-nowrap" onClick={() => onNavigate('home')}>
             RajFlix
         </h1>
         <nav className="hidden space-x-4 md:flex items-center">
@@ -119,25 +119,25 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onSearch, onGe
             </div>
         </nav>
       </div>
-      <div className="flex items-center space-x-4 text-sm font-light">
+      <div className="flex items-center space-x-2 md:space-x-4 text-sm font-light">
          <div className="flex items-center space-x-2">
-            <form onSubmit={handleSearchSubmit} className={`transition-all duration-300 ease-in-out ${isSearchOpen ? 'w-48 md:w-64' : 'w-0'}`}>
+            <form onSubmit={handleSearchSubmit} className={`transition-all duration-300 ease-in-out ${isSearchOpen ? 'w-40 sm:w-48 md:w-64' : 'w-0'}`}>
                <input
                  ref={searchInputRef}
                  type="text"
                  value={searchQuery}
                  onChange={(e) => setSearchQuery(e.target.value)}
-                 placeholder="Search titles..."
-                 className={`bg-transparent border-b-2 ${isSearchOpen ? 'p-1 opacity-100' : 'p-0 opacity-0'} w-full focus:outline-none focus:border-brand-red text-white transition-opacity duration-300`}
+                 placeholder="Search..."
+                 className={`bg-transparent border-b-2 ${isSearchOpen ? 'p-1 opacity-100' : 'p-0 opacity-0'} w-full focus:outline-none focus:border-brand-red text-white transition-opacity duration-300 text-sm`}
                />
             </form>
             <button onClick={() => isSearchOpen ? handleClearSearch() : setIsSearchOpen(true)} className="text-white hover:text-gray-300">
               {isSearchOpen ? (
-                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 md:w-6 md:h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                  </svg>
               ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 md:w-6 md:h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
               )}
@@ -148,7 +148,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigate, onSearch, onGe
                 <img
                     src={profileImage}
                     alt="Profile"
-                    className="h-8 w-8 cursor-pointer rounded object-cover transition-transform duration-200 hover:scale-110 hover:ring-2 hover:ring-brand-red"
+                    className="h-7 w-7 md:h-8 md:w-8 cursor-pointer rounded object-cover transition-transform duration-200 hover:scale-110 hover:ring-2 hover:ring-brand-red"
                 />
             </button>
             {isProfileMenuOpen && (

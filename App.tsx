@@ -110,7 +110,7 @@ const App: React.FC = () => {
           renderContent()
         )}
       </main>
-      {selectedMovie && <MovieModal movie={selectedMovie} onClose={handleCloseModal} />}
+      {selectedMovie && <MovieModal movie={selectedMovie} onClose={handleCloseModal} onSelectMovie={handleSelectMovie} />}
       {isAboutModalOpen && <AboutModal onClose={() => setIsAboutModalOpen(false)} />} {/* Render About Modal */}
     </div>
   );

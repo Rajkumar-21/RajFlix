@@ -18,7 +18,7 @@ export const getMovieSuggestions = async (prompt: string): Promise<string[]> => 
   try {
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: `Based on the following description, suggest up to 8 movies. Description: "${prompt}"`,
+        contents: `Based on the following description, suggest up to 10 movies & series. Description: "${prompt}"`,
         config: {
             responseMimeType: "application/json",
             responseSchema: {

@@ -4,6 +4,48 @@ const TMDB_API_KEY = 'dcf4bf4db5e5cc2ee91da5557c4e8155';
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 
+export interface Genre {
+  id: number;
+  name: string;
+}
+
+export const genres: Genre[] = [
+  { id: 28, name: 'Action' },
+  { id: 12, name: 'Adventure' },
+  { id: 16, name: 'Animation' },
+  { id: 35, name: 'Comedy' },
+  { id: 80, name: 'Crime' },
+  { id: 99, name: 'Documentary' },
+  { id: 18, name: 'Drama' },
+  { id: 10751, name: 'Family' },
+  { id: 14, name: 'Fantasy' },
+  { id: 36, name: 'History' },
+  { id: 27, name: 'Horror' },
+  { id: 10402, name: 'Music' },
+  { id: 9648, name: 'Mystery' },
+  { id: 10749, name: 'Romance' },
+  { id: 878, name: 'Science Fiction' },
+  { id: 10770, name: 'TV Movie' },
+  { id: 53, name: 'Thriller' },
+  { id: 10752, name: 'War' },
+  { id: 37, name: 'Western' },
+  { id: 10759, name: 'Action & Adventure' }, // TV specific
+  { id: 10762, name: 'Kids' }, // TV specific
+  { id: 10763, name: 'News' }, // TV specific
+  { id: 10764, name: 'Reality' }, // TV specific
+  { id: 10765, name: 'Sci-Fi & Fantasy' }, // TV specific
+  { id: 10766, name: 'Soap' }, // TV specific
+  { id: 10767, name: 'Talk' }, // TV specific
+  { id: 10768, name: 'War & Politics' }, // TV specific
+];
+
+export const getGenreUrl = (genreId: number, mediaType: 'movie' | 'tv' | 'all' = 'all'): string => {
+  if (mediaType === 'all') {
+    return `${API_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=${genreId}&sort_by=popularity.desc`;
+  }
+  return `${API_BASE_URL}/discover/${mediaType}?api_key=${TMDB_API_KEY}&with_genres=${genreId}&sort_by=popularity.desc`;
+};
+
 export const tmdbRequests = {
   // General
   fetchTrending: `${API_BASE_URL}/trending/all/week?api_key=${TMDB_API_KEY}&language=en-US`,
@@ -66,15 +108,61 @@ export const searchMovie = async (query: string): Promise<Movie | null> => {
 };
 
 export const searchMulti = async (query: string): Promise<Movie[]> => {
-  const url = `${API_BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=en-US&page=1&include_adult=false`;
   try {
-    const response = await fetch(url);
-    const data = await response.json();
-    // Filter out people or anything without a poster from search results
-    const filteredResults = data.results.filter(
-        (result: any) => (result.media_type === 'movie' || result.media_type === 'tv') && result.poster_path
+    // Fetch multiple pages for better results
+    const pages = [1, 2];
+    const allResults: Movie[] = [];
+    
+    for (const page of pages) {
+      const url = `${API_BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=en-US&page=${page}&include_adult=false`;
+      const response = await fetch(url);
+      const data = await response.json();
+      
+      if (data.results) {
+        // Filter out people or anything without a poster from search results
+        const filteredResults = data.results.filter(
+          (result: any) => (result.media_type === 'movie' || result.media_type === 'tv') && result.poster_path
+        );
+        allResults.push(...filteredResults);
+      }
+    }
+    
+    // Sort results by relevance and popularity
+    const sortedResults = allResults.sort((a, b) => {
+      const aTitle = (a.title || a.name || '').toLowerCase();
+      const bTitle = (b.title || b.name || '').toLowerCase();
+      const searchTerm = query.toLowerCase();
+      
+      // Exact match gets highest priority
+      const aExactMatch = aTitle === searchTerm;
+      const bExactMatch = bTitle === searchTerm;
+      if (aExactMatch && !bExactMatch) return -1;
+      if (!aExactMatch && bExactMatch) return 1;
+      
+      // Starts with search term gets second priority
+      const aStartsWith = aTitle.startsWith(searchTerm);
+      const bStartsWith = bTitle.startsWith(searchTerm);
+      if (aStartsWith && !bStartsWith) return -1;
+      if (!aStartsWith && bStartsWith) return 1;
+      
+      // Contains search term at word boundary gets third priority
+      const aWordMatch = new RegExp(`\\b${searchTerm}`, 'i').test(aTitle);
+      const bWordMatch = new RegExp(`\\b${searchTerm}`, 'i').test(bTitle);
+      if (aWordMatch && !bWordMatch) return -1;
+      if (!aWordMatch && bWordMatch) return 1;
+      
+      // Finally sort by popularity
+      const aPopularity = a.popularity || 0;
+      const bPopularity = b.popularity || 0;
+      return bPopularity - aPopularity;
+    });
+    
+    // Remove duplicates based on id and media_type
+    const uniqueResults = sortedResults.filter((item, index, self) =>
+      index === self.findIndex((t) => t.id === item.id && t.media_type === item.media_type)
     );
-    return filteredResults;
+    
+    return uniqueResults;
   } catch (error) {
     console.error('Error searching multi:', error);
     return [];

@@ -35,32 +35,38 @@ const Banner: React.FC<BannerProps> = ({ onSelectMovie, fetchUrl }) => {
   }
 
   return (
-    <div className="flex flex-col space-y-2 py-16 md:space-y-4 lg:h-[65vh] lg:justify-end lg:pb-12">
-      <div className="absolute top-0 left-0 -z-10 h-[95vh] w-screen">
+    <div className="relative flex flex-col justify-end space-y-2 py-16 md:space-y-4 min-h-[65vh] lg:min-h-[70vh]">
+      {/* Background Image - Fixed positioning */}
+      <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-full overflow-hidden">
         <img
           src={`${IMAGE_BASE_URL}original${movie.backdrop_path || movie.poster_path}`}
           alt={movie.title || movie.name}
-          className="h-full w-full object-cover"
+          className="w-full h-full object-cover"
+          loading="eager"
         />
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/10 to-brand-black" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-brand-black" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-black/80 via-transparent to-transparent" />
       </div>
 
-      <h1 className="text-2xl font-bold md:text-4xl lg:text-7xl">
-        {movie.title || movie.name || movie.original_name}
-      </h1>
-      <p className="max-w-xs text-xs text-shadow-md md:max-w-lg md:text-lg lg:max-w-2xl lg:text-2xl">
-        {truncate(movie.overview, 150)}
-      </p>
+      {/* Content - positioned above background */}
+      <div className="relative z-10 space-y-2 md:space-y-4">
+        <h1 className="text-2xl font-bold md:text-4xl lg:text-7xl drop-shadow-xl">
+          {movie.title || movie.name || movie.original_name}
+        </h1>
+        <p className="max-w-xs text-xs text-shadow-md md:max-w-lg md:text-lg lg:max-w-2xl lg:text-xl drop-shadow-lg">
+          {truncate(movie.overview, 150)}
+        </p>
 
-      <div className="flex space-x-3">
-        <button className="flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold text-black bg-white transition hover:bg-white/75 md:py-2.5 md:px-8 md:text-xl" onClick={() => onSelectMovie(movie)}>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
-          Play
-        </button>
-        <button className="flex items-center gap-x-2 rounded bg-gray-600/70 px-5 py-1.5 text-sm font-semibold transition hover:bg-gray-500/60 md:py-2.5 md:px-8 md:text-xl" onClick={() => onSelectMovie(movie)}>
-          More Info
-        </button>
+        <div className="flex space-x-3 pt-2">
+          <button className="flex items-center gap-x-2 rounded px-5 py-1.5 text-sm font-semibold text-black bg-white transition hover:bg-white/75 md:py-2.5 md:px-8 md:text-xl" onClick={() => onSelectMovie(movie)}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
+            Play
+          </button>
+          <button className="flex items-center gap-x-2 rounded bg-gray-600/70 px-5 py-1.5 text-sm font-semibold transition hover:bg-gray-500/60 md:py-2.5 md:px-8 md:text-xl" onClick={() => onSelectMovie(movie)}>
+            More Info
+          </button>
+        </div>
       </div>
     </div>
   );

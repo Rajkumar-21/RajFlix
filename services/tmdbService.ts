@@ -1,6 +1,6 @@
 import type { Movie } from '../types';
 
-const TMDB_API_KEY = 'dcf4bf4db5e5cc2ee91da5557c4e8155';
+const TMDB_API_KEY = process.env.TMDB_API_KEY || '';
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 

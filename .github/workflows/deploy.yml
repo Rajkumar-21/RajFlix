@@ -63,6 +63,7 @@ jobs:
       - name: Build with Vite
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: npm run build
 
       - name: Setup Pages
